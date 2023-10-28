@@ -2,26 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.container {
+    @apply w-full max-w-6xl mx-auto;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.btn-primary{
+    @apply bg-brandColor px-10 py-3 rounded-md text-black hover:bg-brandColor/80 duration-150;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.side-navbar{
+    @apply bg-[#292929] w-[250px] fixed left-0 top-0 bottom-0 z-50 flex ;
+}
+
+.admin-contents {
+    @apply ml-[255px] p-10;
+}
+
+.menus a, .menus .side-links{
+    @apply text-white w-full py-3 px-5 hover:bg-[#363636] border-l-2 border-[#292929] hover:border-brandColor flex items-center gap-3;
+}
+
+.modal-box{
+    @apply max-w-3xl;
 }
