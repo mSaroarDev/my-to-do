@@ -1,6 +1,23 @@
 import StatCard from "@/components/StatCard";
+import { headers } from "next/headers";
+import prisma from '@/lib/db';
 
-export default function Dashboard() {
+export default async function Dashboard() {
+
+  const headerList = headers();
+  const uid = await headerList.get('id')
+
+  const totalTaskgroups = await prisma.folder.count({
+    where:{
+      createdBy: parseInt(uid)
+    }
+  });
+  const totalTasks = await prisma.task.count({
+    where:{
+      createdBy: parseInt(uid)
+    }
+  });
+
   return (
     <>
       <div className="stats flex items-center gap-3">
@@ -20,8 +37,8 @@ export default function Dashboard() {
       </div>
 
       <div className="cards p-5 flex items-start justify-start gap-5">
-        <StatCard />
-        <StatCard />
+        <StatCard title='Total Task Groups' data={totalTaskgroups} />
+        <StatCard title='Total Tasks' data={totalTasks}/>
       </div>
     </>
   );

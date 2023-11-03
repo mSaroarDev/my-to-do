@@ -12,7 +12,6 @@ export async function POST(req, { params }) {
       },
       data: {
         name: formData.name,
-        createdBy: 2,
       },
     });
 

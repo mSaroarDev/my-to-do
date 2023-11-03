@@ -10,10 +10,7 @@ export async function POST(req, { params }) {
       where: {
         id: parseInt(id),
       },
-      data: {
-        name: formData.name,
-        createdBy: 2,
-      },
+      data: formData,
     });
 
     return NextResponse.json({ msg: "success", data: data });

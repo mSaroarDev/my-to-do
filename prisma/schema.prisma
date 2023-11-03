@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model user {
+  id        Int      @id @default(autoincrement())
+  fullName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  task   task[]
+  folder folder[]
+}
+
 model folder {
   id        Int      @id @default(autoincrement())
   name      String
@@ -17,16 +29,24 @@ model folder {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  user user   @relation(fields: [createdBy], references: [id], onDelete: Cascade, onUpdate: Cascade)
   task task[]
 }
 
 model task {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   taskName  String
   folderId  Int
+  status    TaskStatus @default(NotCompleted)
   createdBy Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
 
-  folder folder @relation(fields: [folderId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  folder folder @relation(fields: [folderId], references: [id])
+  user   user   @relation(fields: [createdBy], references: [id])
+}
+
+enum TaskStatus {
+  NotCompleted
+  Completed
 }

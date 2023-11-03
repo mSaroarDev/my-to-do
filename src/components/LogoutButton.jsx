@@ -1,11 +1,32 @@
 "use client";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import Toast from "./Tost";
 
 export default function LogoutButton() {
+
+  const router = useRouter()
+
+  const showSuccess = (message) => toast.success(message);
+  const showError = (message) => toast.error(message);
+
+  const handleLogout = async () => {
+    const res = await fetch("/api/logout");
+    console.log(res)
+    if (res.ok) {
+      showSuccess("Logout Success");
+      router.refresh();
+      router.replace("/");
+    }else{
+      showError("Logout Error");
+    }
+
+  }
+    
   return (
     <>
     <Toast />
-      <div className="side-links cursor-pointer">
+      <div onClick={()=> handleLogout()} className="side-links cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

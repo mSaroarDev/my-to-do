@@ -1,20 +1,26 @@
+import Image from "next/image";
 import Link from "next/link";
+import smile from 'public/smile.png';
 
-export default function Task({data, index}) {
+export default function TaskCompleted({data}) {
   return (
     <>
-      <div className="bg-slate-50 hover:bg-slate-100 rounded-md shadow-md p-5 flex items-center justify-start gap-3">
-        <div className="bg-green-500 text-white text-xl font-bold h-7 w-7 rounded-full flex items-center justify-center">
-          {index + 1}
+      <div className="bg-[#d8f3dc]/60 hover:bg-[#d8f3dc]/80 rounded-md shadow-md p-5 flex items-center justify-start gap-3">
+        <div className=" flex items-center justify-center">
+          <Image src={smile} height={25} width={25} alt="Yoo" />
         </div>
         <div className="w-full flex items-center justify-between">
           <div className="flex flex-col items-start justify-between">
-            <h3 className="text-base">
-              {data.taskName}
-            </h3>
+            <h3 className="text-base">{data.taskName}</h3>
           </div>
           <div className="flex items-center justify-center z-50 gap-3">
-            <Link href={process.env.NEXT_PUBLIC_BASE_URL + "/dashboard/task-folder/task/delete/" + data.id}>
+            <Link
+              href={
+                process.env.NEXT_PUBLIC_BASE_URL +
+                "/dashboard/task-folder/task/delete/" +
+                data.id
+              }
+            >
               <button className="flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +37,13 @@ export default function Task({data, index}) {
               </button>
             </Link>
 
-            <Link href={process.env.NEXT_PUBLIC_BASE_URL + "/dashboard/task-folder/task/edit/" + data.id}>
+            {/* <Link
+              href={
+                process.env.NEXT_PUBLIC_BASE_URL +
+                "/dashboard/task-folder/task/edit/" +
+                "1"
+              }
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -43,7 +55,7 @@ export default function Task({data, index}) {
               </svg>
             </Link>
 
-            <Link href={process.env.NEXT_PUBLIC_BASE_URL + "/dashboard/task-folder/task/status-update/" + data.id}>
+            <Link href={"/"}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -56,12 +68,10 @@ export default function Task({data, index}) {
                   clipRule="evenodd"
                 />
               </svg>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
-
-      
     </>
   );
 }

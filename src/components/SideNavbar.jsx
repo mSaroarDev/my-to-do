@@ -1,18 +1,20 @@
+import { headers } from "next/headers";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 // import { UserEmail, userInfo } from "@/utils/user/GetUserInfo";
 
 export default async function SideNavbar() {
-
-  // const user = await userInfo();
-
+  const headerList = headers();
+  const fullName = headerList.get("fullName");
 
   return (
     <>
       <div className="side-navbar">
         <div className="flex flex-col w-full">
           <div className="brand my-16 p-7">
-            <h3 className="text-white text-lg font-bold">What To Do: <br /> <span className="capitalize">Ahnaf</span></h3>
+            <h3 className="text-white text-lg font-bold">
+              What To Do: <br /> <span className="capitalize">{fullName}</span>
+            </h3>
           </div>
 
           <div className="menus flex flex-col w-full">
@@ -48,7 +50,7 @@ export default async function SideNavbar() {
               </svg>{" "}
               Statistics
             </Link>
-            <Link className="side-link" href={"/dashboard/folders"}>
+            <Link className="side-link" href={"/dashboard/task-folder"}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
