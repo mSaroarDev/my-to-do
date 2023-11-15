@@ -13,7 +13,7 @@ export async function POST(req, { params }) {
         id: parseInt(id),
       },
       data: {
-        taskName: formData.name,
+        status: formData.status,
       },
     });
 

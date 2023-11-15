@@ -17,7 +17,7 @@ export default function TaskStatusChange({data}) {
         },
 
         onSubmit: async (values) => {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/task/edit/${data.id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/task/change/${data.id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

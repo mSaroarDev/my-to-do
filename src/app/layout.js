@@ -9,6 +9,8 @@ const Siliguri = Hind_Siliguri({
   adjustFontFallback: false,
 });
 
+export const revalidate = 0;
+
 export const metadata = {
   title: "MyToDo",
   description: "Ultimate To Application",

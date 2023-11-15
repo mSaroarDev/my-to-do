@@ -14,8 +14,6 @@ export async function POST(req) {
       },
     });
 
-    console.log(typeof data.folderId);
-
     return NextResponse.json({ msg: "success", data: data });
   } catch (error) {
     return NextResponse.json({ msg: "failed", data: error }, { status: 500 });

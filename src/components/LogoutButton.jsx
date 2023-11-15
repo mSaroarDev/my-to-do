@@ -12,7 +12,6 @@ export default function LogoutButton() {
 
   const handleLogout = async () => {
     const res = await fetch("/api/logout");
-    console.log(res)
     if (res.ok) {
       showSuccess("Logout Success");
       router.refresh();

@@ -34,7 +34,6 @@ export default function RegisterForm() {
 
         
         if(res.status === 406){
-          console.log("here")
           showError("Email already exist");
         }else if(res.status === 200){
           showSuccess("Registration Successfull");

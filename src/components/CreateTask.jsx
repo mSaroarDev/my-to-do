@@ -17,7 +17,6 @@ export default function CreateTask({folderId, folderName, uid}) {
     },
 
     onSubmit: async (values, { resetForm }) => {
-      console.log(values)
       const url = process.env.NEXT_PUBLIC_BASE_URL;
       const res = await fetch(url + "/api/task/create", {
         method: "POST",

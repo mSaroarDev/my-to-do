@@ -10,8 +10,6 @@ export default async function EditFolderName({ params }) {
     },
   });
 
-  console.log(data)
-
   return (
     <>
       <div className="w-full h-[600px] flex items-center justify-center">
