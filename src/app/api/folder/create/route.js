@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import prisma from "@/lib/db";
 
 export async function POST(req) {
   const formData = await req.json();
@@ -7,12 +8,12 @@ export async function POST(req) {
     const data = await prisma.folder.create({
       data: {
         name: formData.name,
-        createdBy: parseInt(formData.createdBy),
+        createdBy: formData.createdBy,
       },
     });
 
     return NextResponse.json({ msg: "success", data: data });
   } catch (error) {
-    return NextResponse.json({ msg: "failed", data: error });
+    return NextResponse.json({ msg: "failed", data: error }, { status: 500 });
   }
 }
