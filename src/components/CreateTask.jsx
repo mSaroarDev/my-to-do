@@ -1,5 +1,6 @@
 "use client";
 import { useFormik } from "formik";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -8,6 +9,31 @@ export default function CreateTask({folderId, folderName, uid}) {
   const showError = (message) => toast.error(message);
 
   const router = useRouter();
+
+  const deleteAllTasks = useFormik({
+    initialValues: {
+      fid: parseInt(folderId)
+    },
+
+    onSubmit: async (values) => {
+      const url = process.env.NEXT_PUBLIC_BASE_URL;
+      const res = await fetch(url + "/api/task/delete-all", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(values)
+      })
+
+      if(res.status === 200){
+        showSuccess("Successfully Deleted");
+        router.refresh();
+        document.getElementById("my_modal_2").close();
+      }else {
+        showError("Failed");
+      }
+    }
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -19,7 +45,7 @@ export default function CreateTask({folderId, folderName, uid}) {
     onSubmit: async (values, { resetForm }) => {
       const url = process.env.NEXT_PUBLIC_BASE_URL;
       const res = await fetch(url + "/api/task/create", {
-        method: "POST",
+        method: "POST",   
         headers: {
           "Content-Type": "application/json",
         },
@@ -54,9 +80,15 @@ export default function CreateTask({folderId, folderName, uid}) {
             {folderName.name}
           </h1>
         </div>
-        <div>
+        <div className="flex items-center gap-2">
           <button
-            className="btn flex items-center gap-3"
+            className="btn bg-red-500 btn-sm text-white flex items-center gap-3 hover:bg-red-500/20 hover:text-red-500"
+            onClick={() => document.getElementById("my_modal_2").showModal()}
+          >
+            Delete All
+          </button>
+          <button
+            className="btn btn-sm flex items-center gap-2"
             onClick={() => document.getElementById("my_modal_1").showModal()}
           >
             <svg
@@ -114,6 +146,49 @@ export default function CreateTask({folderId, folderName, uid}) {
               className="input input-bordered w-full"
             />
             <button className="btn btn-neutral" type="submit">
+              Submit
+            </button>
+          </form>
+        </div>
+      </dialog>
+
+      {/* modal */}
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box">
+          <div className="modal-action text-right">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="-mt-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </button>
+            </form>
+          </div>
+          <form onSubmit={deleteAllTasks.handleSubmit} className="flex flex-col gap-3 text-center">
+            <label className="font-bold text-lg " htmlFor="title">
+              Are you sure to delete all task from {folderName.name}
+            </label>
+            <input
+              type="text"
+              id="fid"
+              name="fid"
+              value={deleteAllTasks.values.fid}
+              onChange={deleteAllTasks.handleChange}
+              className="input input-bordered w-full hidden"
+            />
+            <button className="btn bg-red-500 text-white mt-10 hover:bg-red-500/20 hover:text-red-500" type="submit">
               Submit
             </button>
           </form>
